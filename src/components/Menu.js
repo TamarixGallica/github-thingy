@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Drawer, List, ListItem, ListItemText, makeStyles } from '@material-ui/core';
+import {
+  Drawer, List, ListItem, ListItemText, makeStyles,
+} from '@material-ui/core';
 
 const navigationWidth = 150;
 
@@ -36,6 +38,6 @@ const Navigation = () => {
       </Drawer>
     </div>
   );
-}
+};
 
 export default Navigation;
