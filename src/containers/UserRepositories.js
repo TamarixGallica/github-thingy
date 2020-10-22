@@ -6,11 +6,12 @@ import Spinner from '../components/Spinner';
 import RepositoryList from '../components/RepositoryList';
 
 const GET_REPOSITORIES_OF_CURRENT_USER = gql`
-  {
+  query($cursor: String) {
     viewer {
       repositories(
         first: 10
         orderBy: { direction: DESC, field: STARGAZERS }
+        after: $cursor
       ) {
         edges {
           node {
@@ -35,6 +36,10 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
             viewerSubscription
           }
         }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
       }
     }
   }
@@ -42,7 +47,7 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
 
 const UserRepositories = () => (
   <Query query={GET_REPOSITORIES_OF_CURRENT_USER}>
-    {({ data, loading }) => {
+    {({ data, loading, fetchMore }) => {
       if (loading) {
         return <Spinner />;
       }
@@ -52,7 +57,11 @@ const UserRepositories = () => (
         <Container>
           <Box>
             <Typography variant="h1">My repositories</Typography>
-            <RepositoryList repositories={viewer.repositories.edges} />
+            <RepositoryList
+              repositories={viewer.repositories.edges}
+              pageInfo={viewer.repositories.pageInfo}
+              fetchMore={fetchMore}
+            />
           </Box>
         </Container>
       );
