@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  Box, Paper, Typography, Link,
+} from '@material-ui/core';
+import StarIcon from '@material-ui/icons/Star';
 
 const RepositoryItem = ({
   name,
@@ -9,44 +13,42 @@ const RepositoryItem = ({
   owner,
   stargazers,
 }) => (
-  <div>
-    <div>
-      <h2>
-        <a href={url}>{name}</a>
-      </h2>
-
-      <div>
+  <Box m={1}>
+    <Paper>
+      <Typography variant="h6" component="h2"><Link href={url}>{name}</Link></Typography>
+      <Typography>
+        <StarIcon />
+        <Typography variant="srOnly">Starred</Typography>
         {stargazers.totalCount}
+        <Typography variant="srOnly">times</Typography>
+      </Typography>
+      {
+      description
+      && (
+        <Typography>
+          {description}
+        </Typography>
+      )
+    }
+      {
+      primaryLanguage && (
+        <Typography>
+          Language:
+          {primaryLanguage.name}
+        </Typography>
+      )
+    }
+      {
+    owner && (
+      <Typography>
+        Owner:
         {' '}
-        Stars
-      </div>
-    </div>
-
-    <div>
-      <div>
-        {description}
-      </div>
-      <div>
-        <div>
-          {primaryLanguage && (
-            <span>
-              Language:
-              {primaryLanguage.name}
-            </span>
-          )}
-        </div>
-        <div>
-          {owner && (
-            <span>
-              Owner:
-              {' '}
-              <a href={owner.url}>{owner.login}</a>
-            </span>
-          )}
-        </div>
-      </div>
-    </div>
-  </div>
+        <Link href={owner.url}>{owner.login}</Link>
+      </Typography>
+    )
+  }
+    </Paper>
+  </Box>
 );
 
 RepositoryItem.propTypes = {
@@ -71,9 +73,9 @@ RepositoryItem.propTypes = {
 };
 
 RepositoryItem.defaultProps = {
-  description: '',
+  description: undefined,
   primaryLanguage: {
-    color: '',
+    color: undefined,
   },
 };
 
