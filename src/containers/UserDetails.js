@@ -9,6 +9,7 @@ import LocationCityIcon from '@material-ui/icons/LocationCity';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
+import Spinner from '../components/Spinner';
 import ListItemWithIcon from '../components/ListItemWithIcon';
 
 const GET_CURRENT_USER_DETAILS = gql`
@@ -28,7 +29,7 @@ const UserDetails = () => (
   <Query query={GET_CURRENT_USER_DETAILS}>
     {({ data, loading }) => {
       if (loading) {
-        return <div>Loading</div>;
+        return <Spinner />;
       }
 
       const { viewer } = data;
