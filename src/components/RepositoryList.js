@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import RepositoryItem from './RepositoryItem';
 
 const updateQuery = (previousResult, { fetchMoreResult }) => {
@@ -24,7 +24,9 @@ const updateQuery = (previousResult, { fetchMoreResult }) => {
   };
 };
 
-const RepositoryList = ({ repositories, pageInfo, fetchMore }) => (
+const RepositoryList = ({
+  repositories, pageInfo, totalCount, fetchMore,
+}) => (
   <>
     {
       repositories.map(({ node }) => (
@@ -32,6 +34,15 @@ const RepositoryList = ({ repositories, pageInfo, fetchMore }) => (
         <RepositoryItem key={node.id} {...node} />
       ))
     }
+    <Typography>
+      Showing
+      {' '}
+      {repositories.length}
+      /
+      {totalCount}
+      {' '}
+      repositories
+    </Typography>
     <Button
       variant="contained"
       color="primary"

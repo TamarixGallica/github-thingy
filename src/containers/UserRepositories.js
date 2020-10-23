@@ -6,13 +6,9 @@ import Spinner from '../components/Spinner';
 import RepositoryList from '../components/RepositoryList';
 
 const GET_REPOSITORIES_OF_CURRENT_USER = gql`
-  query($cursor: String) {
+  query ($cursor: String) {
     viewer {
-      repositories(
-        first: 10
-        orderBy: { direction: DESC, field: STARGAZERS }
-        after: $cursor
-      ) {
+      repositories(first: 10, orderBy: {direction: DESC, field: STARGAZERS}, after: $cursor) {
         edges {
           node {
             id
@@ -40,6 +36,7 @@ const GET_REPOSITORIES_OF_CURRENT_USER = gql`
           endCursor
           hasNextPage
         }
+        totalCount
       }
     }
   }
@@ -60,6 +57,7 @@ const UserRepositories = () => (
             <RepositoryList
               repositories={viewer.repositories.edges}
               pageInfo={viewer.repositories.pageInfo}
+              totalCount={viewer.repositories.totalCount}
               fetchMore={fetchMore}
             />
           </Box>
